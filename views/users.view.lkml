@@ -9,7 +9,8 @@ view: users {
   # You need to define a primary key in a view in order to join to other views.
 
   dimension: id {
-    label: "Numero do Usuario"
+    label: "Número do Usuário"
+    description: "Número identificador do Usuário"
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
