@@ -65,18 +65,26 @@ view: users {
   }
 
   dimension: first_name {
+    label: "Primeiro Nome"
     type: string
     sql: upper(${TABLE}.first_name) ;;
+  }
+
+  dimension: last_name {
+    label: "Último Nome"
+    type: string
+    sql: upper(${TABLE}.last_name) ;;
+  }
+
+  dimension: full_name {
+    label: "Nome Completo"
+    type: string
+    sql: concat(${first_name},'', ${last_name}) ;;
   }
 
   dimension: gender {
     type: string
     sql: ${TABLE}.gender ;;
-  }
-
-  dimension: last_name {
-    type: string
-    sql: upper(${TABLE}.last_name) ;;
   }
 
   dimension: latitude {
