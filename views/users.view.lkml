@@ -73,7 +73,7 @@ view: users {
   dimension: last_name {
     label: "Último Nome"
     type: string
-    sql: upper(${TABLE}.last_name) ;;
+    sql: case when upper(${TABLE}.last_name) is null then ' ' else upper(${TABLE}.last_name) end ;;
   }
 
   dimension: full_name {
