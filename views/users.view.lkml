@@ -9,6 +9,8 @@ view: users {
   # You need to define a primary key in a view in order to join to other views.
 
   dimension: id {
+    label: "Número do Usuário"
+    description: "Número identificador do Usuário"
     primary_key: yes
     type: number
     sql: ${TABLE}.id ;;
@@ -18,6 +20,7 @@ view: users {
     # This dimension will be called "Age" in Explore.
 
   dimension: age {
+    label: "Idade"
     type: number
     sql: ${TABLE}.age ;;
   }
@@ -27,18 +30,22 @@ view: users {
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
 
   measure: total_age {
+    label: "Soma das Idades"
     type: sum
     sql: ${age} ;;  }
   measure: average_age {
+    label: "Média das Idades"
     type: average
     sql: ${age} ;;  }
 
   dimension: city {
+    label: "Cidade"
     type: string
     sql: ${TABLE}.city ;;
   }
 
   dimension: country {
+    label: "País"
     type: string
     map_layer_name: countries
     sql: ${TABLE}.country ;;
@@ -58,18 +65,26 @@ view: users {
   }
 
   dimension: first_name {
+    label: "Primeiro Nome"
     type: string
-    sql: ${TABLE}.first_name ;;
+    sql: upper(${TABLE}.first_name) ;;
+  }
+
+  dimension: last_name {
+    label: "Último Nome"
+    type: string
+    sql: case when upper(${TABLE}.last_name) is null then ' ' else upper(${TABLE}.last_name) end ;;
+  }
+
+  dimension: full_name {
+    label: "Nome Completo"
+    type: string
+    sql: concat(${first_name},' ', ${last_name}) ;;
   }
 
   dimension: gender {
     type: string
     sql: ${TABLE}.gender ;;
-  }
-
-  dimension: last_name {
-    type: string
-    sql: ${TABLE}.last_name ;;
   }
 
   dimension: latitude {
@@ -80,6 +95,13 @@ view: users {
   dimension: longitude {
     type: number
     sql: ${TABLE}.longitude ;;
+  }
+
+  dimension: location {
+    label: "Localidade"
+    type: location
+    sql_latitude: ${latitude} ;;
+    sql_longitude: ${longitude} ;;
   }
 
   dimension: postal_code {
@@ -109,13 +131,13 @@ view: users {
   # ----- Sets of fields for drilling ------
   set: detail {
     fields: [
-	id,
-	last_name,
-	first_name,
-	events.count,
-	orders.count,
-	order_items.count
-	]
+  id,
+  last_name,
+  first_name,
+  events.count,
+  orders.count,
+  order_items.count
+  ]
   }
 
 }
